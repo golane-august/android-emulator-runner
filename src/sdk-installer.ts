@@ -5,6 +5,7 @@ import * as tc from '@actions/tool-cache';
 import * as fs from 'fs';
 
 const BUILD_TOOLS_VERSION = '31.0.0';
+const PLATFORM_TOOLS_VERSION = '31';
 const CMDLINE_TOOLS_URL_MAC = 'https://dl.google.com/android/repository/commandlinetools-mac-7583922_latest.zip';
 const CMDLINE_TOOLS_URL_LINUX = 'https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip';
 
@@ -39,7 +40,7 @@ export async function installAndroidSdk(apiLevel: number, target: string, arch: 
 
   console.log('Installing latest build tools, platform tools, and platform.');
 
-  await exec.exec(`sh -c \\"sdkmanager --install 'build-tools;${BUILD_TOOLS_VERSION}' platform-tools 'platforms;android-${apiLevel}' > /dev/null"`);
+  await exec.exec(`sh -c \\"sdkmanager --install 'build-tools;${BUILD_TOOLS_VERSION}' platform-tools 'platforms;android-${PLATFORM_TOOLS_VERSION}' > /dev/null"`);
 
   console.log('Installing latest emulator.');
   await exec.exec(`sh -c \\"sdkmanager --install emulator --channel=${channelId} > /dev/null"`);
