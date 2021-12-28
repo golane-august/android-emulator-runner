@@ -29,8 +29,8 @@ export async function installAndroidSdk(apiLevel: number, target: string, arch: 
     await io.mv(`${cmdlineToolsPath}/cmdline-tools`, `${cmdlineToolsPath}/latest`);
   }
 
-  // add paths for commandline-tools and platform-tools
-  core.addPath(`${cmdlineToolsPath}/latest:${cmdlineToolsPath}/latest/bin:${process.env.ANDROID_SDK_ROOT}/platform-tools`);
+  // add paths for commandline-tools, platform-tools and emulator
+  core.addPath(`${cmdlineToolsPath}/latest:${cmdlineToolsPath}/latest/bin:${process.env.ANDROID_SDK_ROOT}/platform-tools:${process.env.ANDROID_SDK_ROOT}/emulator`);
 
   // set standard AVD path
   core.exportVariable('ANDROID_AVD_HOME', `${process.env.HOME}/.android/avd`);
@@ -53,6 +53,7 @@ export async function installAndroidSdk(apiLevel: number, target: string, arch: 
     await exec.exec(`unzip -o -q emulator.zip -d ${process.env.ANDROID_SDK_ROOT}`);
     await io.rmRF('emulator.zip');
   }
+
   await exec.exec(`sh -c \\"emulator --version > /dev/null"`);
 
   console.log('Installing system images.');
