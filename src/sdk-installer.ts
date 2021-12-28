@@ -42,9 +42,6 @@ export async function installAndroidSdk(apiLevel: number, target: string, arch: 
 
   await exec.exec(`sh -c \\"sdkmanager --install 'build-tools;${BUILD_TOOLS_VERSION}' platform-tools 'platforms;android-${PLATFORM_TOOLS_VERSION}' > /dev/null"`);
 
-  console.log('Installing latest emulator.');
-  await exec.exec(`sh -c \\"sdkmanager --install emulator --channel=${channelId} > /dev/null"`);
-
   console.log('Update SDK Manager packages.');
   await exec.exec(`sh -c \\"sdkmanager --update --channel=${channelId} > /dev/null"`);
 
@@ -57,7 +54,7 @@ export async function installAndroidSdk(apiLevel: number, target: string, arch: 
     await io.rmRF('emulator.zip');
   }
 
-  await exec.exec('emulator -version');
+  await exec.exec('emulator -use-system-libs -version');
 
   console.log('Installing system images.');
   await exec.exec(`sh -c \\"sdkmanager --install 'system-images;android-${apiLevel};${target};${arch}' --channel=${channelId} > /dev/null"`);
